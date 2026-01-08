@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* CSS personalizado */
+@import "./styles/login.css";
