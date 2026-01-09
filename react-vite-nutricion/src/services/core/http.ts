@@ -1,10 +1,6 @@
 import { API_BASE_URL } from './config'
 import { getToken } from '../../utils/storage'
 
-interface RequestOptions extends RequestInit {
-  auth?: boolean
-}
-
 export const http = async <T>(
   endpoint: string,
   { auth = true, ...options }: RequestOptions = {}
@@ -26,18 +22,18 @@ export const http = async <T>(
     ...options,
     headers,
   })
+
+  let json: any
+  try {
+    json = await response.json()
+  } catch {
+    json = null
+  }
+
   if (!response.ok) {
-    let errorMessage = 'Error en la petición'
-
-    try {
-      const errorData = await response.json()
-      errorMessage = errorData.msg || errorMessage
-    } catch {
-      errorMessage = response.statusText
-    }
-
+    const errorMessage = json?.msg || response.statusText || 'Error en la petición'
     throw new Error(errorMessage)
   }
 
-  return response.json()
+  return json as T
 }

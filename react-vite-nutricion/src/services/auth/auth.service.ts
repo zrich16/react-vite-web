@@ -1,9 +1,9 @@
 import { http } from '../core/http'
-import type { LoginRequest, LoginResponse } from '../../types/auth'
+import type { UserData, AuthContextType } from '../../types/auth'
 
 export const authService = {
-  login: (data: LoginRequest) =>
-    http<LoginResponse>('autenticacion/loginUser', {
+  login: (data: UserData) =>
+    http<AuthContextType>('auth/login', {
       method: 'POST',
       body: JSON.stringify(data),
       auth: false,
@@ -11,4 +11,4 @@ export const authService = {
 
   logout: () =>
     http<void>('/auth/logout', { method: 'POST' }),
-}
+};
