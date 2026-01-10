@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import { saveToken } from '../../utils/storage'
-import ScreenBlock from '../../components/ui/ScreenBlock'
-import Swal from 'sweetalert2'
+import DashboardLayout from "../../components/layout/DashboardLayout";
+import Card from "../../components/ui/Card";
 
-import { useAuth } from "../../context/AuthContext";
-const Dashboard = () => {
+export default function Dashboard() {
+  return (
+    <DashboardLayout>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+        <Card title="Usuarios Citas por Dia" value="1,245" icon="👤" />
+        <Card title="Usuarios Nuevo por Mes" value="$32,500" icon="💰" />
+        <Card title="Usuarios Total" value="320" icon="📦" />
 
-    const { data, token } = useAuth();
-     return (
-    <>      <p>Bienvenido {data?.nombre}</p> </>
-      )
+      </div>
+    </DashboardLayout>
+  );
 }
-
-export default Dashboard

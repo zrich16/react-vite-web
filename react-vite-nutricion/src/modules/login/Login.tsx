@@ -7,8 +7,6 @@ import Swal from 'sweetalert2'
 
 import { useAuth } from '../../context/AuthContext'
 
-
-
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsuario] = useState('')
@@ -16,32 +14,32 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-   const { login } = useAuth()
+  const { login } = useAuth()
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setError(null);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
 
-  if (!username.trim() || !password.trim()) {
-    Swal.fire({ icon: "error", title: "Credenciales", text: "Debe ingresar sus credenciales" });
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    await login({ username, password }); // solo llamar
-    navigate('/dashboard'); // ya tienes user en contexto
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      Swal.fire({ icon: "error", title: "Credenciales", text: err.message });
-    } else {
-      setError('Error inesperado');
+    if (!username.trim() || !password.trim()) {
+      Swal.fire({ icon: "error", title: "Credenciales", text: "Debe ingresar sus credenciales" });
+      return;
     }
-  } finally {
-    setLoading(false);
+
+    setLoading(true);
+
+    try {
+      await login({ username, password });
+      navigate('/dashboard'); 
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        Swal.fire({ icon: "error", title: "Credenciales", text: err.message });
+      } else {
+        setError('Error inesperado');
+      }
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
 
   return (
