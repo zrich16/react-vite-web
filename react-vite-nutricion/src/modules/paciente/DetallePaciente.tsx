@@ -1,0 +1,204 @@
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
+import { QRCodeCanvas } from "qrcode.react";
+import SignatureCanvas from "react-signature-canvas";
+import Swal from "sweetalert2";
+
+import DashboardLayout from "../../components/layout/DashboardLayout";
+import ScreenBlock from "../../components/ui/ScreenBlock";
+import InfoGeneral from "./InfoGeneral";
+import HistorialClinico from "./HistorialClinico";
+import DatosContacto from "./DatosContacto";
+import Citas from "./Citas";
+
+import logo from "./../../../public/img/feliz.png";
+
+const tabs = [
+  { id: "general", label: "Información General" },
+  { id: "historial", label: "Historial Clínico" },
+  { id: "contacto", label: "Datos de Contacto" },
+  { id: "citas", label: "Citas" },
+];
+
+export default function PacienteDetalle() {
+  const location = useLocation();
+  const { pacienteItem } = location.state || {};
+
+  const [paciente, setPaciente] = useState({});
+  const [activeTab, setActiveTab] = useState("general");
+  const [loading, setLoading] = useState(false);
+
+  const expedienteRef = useRef(null);
+  const sigRef = useRef(null);
+
+  useEffect(() => {
+    setLoading(true);
+    try {
+      setPaciente(pacienteItem || {});
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo cargar el paciente",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [pacienteItem]);
+
+  const handlePrint = useReactToPrint({
+    content: () => expedienteRef.current,
+    documentTitle: `Expediente_${paciente.curp}`,
+  });
+
+  return (
+    <DashboardLayout>
+      <div className="bg-white rounded-2xl shadow-lg border border-blue-100 overflow-hidden">
+        <ScreenBlock show={loading} text="Cargando información..." />
+
+        {/* HEADER */}
+        <div className="p-6 bg-gradient-to-r from-[#00008B] to-blue-500 text-white">
+          <h2 className="text-2xl font-bold">
+            {paciente.nombre} {paciente.primer_apellido}{" "}
+            {paciente.segundo_apellido}
+          </h2>
+          <p className="text-blue-100 text-sm">
+            Paciente @{paciente.username}
+          </p>
+        </div>
+
+        {/* BOTÓN PDF */}
+        <div className="p-4">
+          <button
+            onClick={handlePrint}
+            className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-lg shadow print:hidden"
+          >
+            🖨️ Exportar Expediente en PDF
+          </button>
+        </div>
+
+        {/* TABS */}
+        <div className="border-b border-blue-100 bg-blue-50 print:hidden">
+          <nav className="flex flex-wrap">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative px-6 py-3 text-sm font-medium transition
+                  ${
+                    activeTab === tab.id
+                      ? "text-blue-800 bg-white"
+                      : "text-blue-600 hover:bg-blue-100"
+                  }`}
+              >
+                {tab.label}
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="tab-indicator"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00008B] to-blue-500"
+                  />
+                )}
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        {/* CONTENIDO TABS */}
+        <div className="p-6 min-h-[250px] print:hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {activeTab === "general" && <InfoGeneral paciente={paciente} />}
+              {activeTab === "historial" && (
+                <HistorialClinico paciente={paciente} />
+              )}
+              {activeTab === "contacto" && (
+                <DatosContacto paciente={paciente} />
+              )}
+              {activeTab === "citas" && <Citas paciente={paciente} />}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* ================= EXPEDIENTE IMPRIMIBLE ================= */}
+        <div ref={expedienteRef} className="bg-white p-10 text-black" >
+
+          {/* ENCABEZADO */}
+          <header className="flex justify-between items-center border-b-2 pb-4 mb-6">
+            <div className="flex items-center gap-4">
+              <img src={logo} alt="Logo" className="h-16" />
+              <div>
+                <h1 className="text-2xl font-bold">Expediente Clínico</h1>
+                <p className="text-sm text-gray-600">
+                  Clínica Médica Integral
+                </p>
+              </div>
+            </div>
+
+            <QRCodeCanvas
+              value={`https://clinica.com/expediente/${paciente.curp}`}
+              size={90}
+            />
+          </header>
+
+          {/* DATOS PACIENTE */}
+          <section className="mb-6 text-sm">
+            <h2 className="font-semibold text-lg mb-2">
+              Datos del Paciente
+            </h2>
+
+            <div className="grid grid-cols-2 gap-3">
+              <p><strong>Nombre:</strong> {paciente.nombre}</p>
+              <p><strong>CURP:</strong> {paciente.curp}</p>
+              <p><strong>Fecha Nacimiento:</strong> {paciente.fecha_nacimiento}</p>
+              <p><strong>Edad:</strong> {paciente.edad}</p>
+              <p><strong>Sexo:</strong> {paciente.sexo}</p>
+              <p><strong>Correo:</strong> {paciente.email}</p>
+            </div>
+          </section>
+
+          {/* INFORMACIÓN MÉDICA */}
+          <section className="mb-6 text-sm">
+            <p><strong>Alergias:</strong> {paciente.alergias || "No registradas"}</p>
+            <p><strong>Diagnóstico:</strong> {paciente.diagnostico || "N/A"}</p>
+            <p><strong>Tratamiento:</strong> {paciente.tratamiento || "N/A"}</p>
+          </section>
+
+          {/* FIRMA */}
+          <section className="mt-12 grid grid-cols-2 items-end">
+            <div>
+              <p className="text-sm mb-2">Firma del Médico</p>
+              <SignatureCanvas
+                ref={sigRef}
+                canvasProps={{
+                  width: 300,
+                  height: 120,
+                  className: "border rounded",
+                }}
+              />
+              <button
+                onClick={() => sigRef.current.clear()}
+                className="text-xs text-blue-600 underline mt-1 print:hidden"
+              >
+                Limpiar firma
+              </button>
+            </div>
+
+            <div className="text-right text-sm">
+              <p>Fecha:</p>
+              <p>{new Date().toLocaleDateString()}</p>
+            </div>
+          </section>
+        </div>
+        {/* ========================================================== */}
+      </div>
+    </DashboardLayout>
+  );
+}

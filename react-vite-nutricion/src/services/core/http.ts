@@ -31,7 +31,7 @@ export const http = async <T>(
   }
 
   if (!response.ok) {
-    const errorMessage = json?.msg || response.statusText || 'Error en la petición'
+    const errorMessage = json?.message || response.statusText || 'Error en la petición'
     throw new Error(errorMessage)
   }
 

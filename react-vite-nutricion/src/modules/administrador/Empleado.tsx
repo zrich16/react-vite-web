@@ -7,7 +7,7 @@ import { FaUser, FaIdBadge, FaPhoneVolume } from "react-icons/fa";
 import type { fusuario } from "../../types/filtros";
 import { useNavigate } from 'react-router-dom';
 
-export default function NutriologoInicio() {
+export default function AdminEmpleado() {
 
 
   const navigate = useNavigate();
@@ -18,6 +18,8 @@ export default function NutriologoInicio() {
     telefono: ""
 
   });
+
+
 
   const [loading, setLoading] = useState(true);
 
@@ -31,10 +33,6 @@ export default function NutriologoInicio() {
     setLoading(false);
   }, []); // El array vacío [] asegura que se ejecute solo una vez
 
-  // 3. Renderizado condicional
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -46,14 +44,9 @@ export default function NutriologoInicio() {
     }));
   };
 
-  const detallePaciente = () => {
+  const  redirigeRegistroPaciente = () => {
 
-    navigate('/detalle-paciente');
-  }
-
-   const redirigeRegistroPaciente = () => {
-
-    navigate('/nutriologo-registro-paciente');
+          navigate('/nutriologo-registro-paciente'); 
   }
 
   return (
@@ -62,7 +55,7 @@ export default function NutriologoInicio() {
 
         {/* Título */}
         <h2 className="text-2xl font-bold text-gray-800">
-          Busqueda Paciente
+          Empleado
         </h2>
 
         <motion.button onClick={redirigeRegistroPaciente}
@@ -78,7 +71,7 @@ export default function NutriologoInicio() {
     shadow-lg
   "
         >
-          Agregar Paciente
+          Agregar Empleado
         </motion.button>
         {/* Filtros */}
         <div className="bg-white p-6 rounded-lg shadow">
@@ -146,7 +139,7 @@ export default function NutriologoInicio() {
                 </td>
 
                 <td className="px-6 py-4 text-center">
-                  <button onClick={detallePaciente}
+                  <button
                     className="
     px-3 py-1
     text-sm
@@ -178,7 +171,7 @@ export default function NutriologoInicio() {
                 </td>
 
                 <td className="px-6 py-4 text-center">
-                  <button onClick={detallePaciente}
+                  <button
                     className="
     px-3 py-1
     text-sm

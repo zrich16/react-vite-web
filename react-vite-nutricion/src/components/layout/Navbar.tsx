@@ -14,7 +14,7 @@ export default function Navbar({ collapsed, setCollapsed }) {
       </h1>
 
       <img
-        src="https://i.pravatar.cc/40"
+        src="./../../../public/img/feliz.png"
         className="w-9 h-9 rounded-full ring-2 ring-[#00008B]"
       />
     </header>

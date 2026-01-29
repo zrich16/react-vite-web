@@ -25,7 +25,7 @@ export default function Sidebar({ collapsed }) {
       children: [
         { label: "Inicio", url: "/nutriologo-inicio" },
         { label: "Registro Paciente", url: "/nutriologo-registro-paciente" },
-        { label: "Detalle", url: "/nutriologo-detalle-paciente" },
+        { label: "Lista Pacientes", url: "/nutriologo-lista-paciente" },
       ],
     },
     {
@@ -42,8 +42,8 @@ export default function Sidebar({ collapsed }) {
       icon: "📊",
       children: [
         { label: "Inicio", url: "/admin-inicio" },
-        { label: "Registro Paciente", url: "/admin-registro-paciente" },
-        { label: "Registro Empleado", url: "/admin-registro-e mpleado" },
+        { label: "Paciente", url: "/admin-registro-paciente" },
+        { label: "Empleado", url: "/admin-registro-e mpleado" },
       ],
     },
   ];

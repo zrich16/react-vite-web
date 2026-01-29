@@ -2,3 +2,32 @@
 
 /* CSS personalizado */
 @import "./styles/login.css";
+@import "./styles/DetallePaciente.css";
+
+@media print {
+  body {
+    background: white;
+  }
+
+  nav,
+  aside,
+  .sidebar,
+  .no-print {
+    display: none !important;
+  }
+
+  .print-container {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    margin: 0 auto;
+  }
+
+  h1, h2, h3 {
+    color: #000 !important;
+  }
+
+  p {
+    font-size: 12px;
+  }
+}
