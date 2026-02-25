@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import ScreenBlock from '../../components/ui/ScreenBlock'
+import ScreenBlock from '../../../shared/components/ui/ScreenBlock'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../../context/AuthContext'
 
 const Login = () => {
   const navigate = useNavigate();

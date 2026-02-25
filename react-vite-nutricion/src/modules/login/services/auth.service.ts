@@ -1,5 +1,5 @@
-import { http } from '../core/http'
-import type { UserData, AuthContextType } from '../../types/auth'
+import { http } from '../../../services/core/http'
+import type { UserData, AuthContextType } from '../../../types/auth'
 const BASE_URL = 'auth';
 export const authService = {
   login(data: UserData) {

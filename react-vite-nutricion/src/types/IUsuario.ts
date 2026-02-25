@@ -50,8 +50,6 @@ export interface UsuarioApi {
 
 }
 
-
-
 export interface IUsuario {
     id_user?: string
     username?: string
@@ -69,6 +67,38 @@ export interface IUsuario {
     sexo?: string
     telefono?: string
     fecha_nacimiento?: string
+    citas:ICitas[] | []
+    historialClinico: IClinicalHistory[] | []
 
 
+}
+
+
+export interface ICitas {
+     id_cita?: number
+    estatus?: string
+    comentarios?: string
+    fk_usuario?: number
+    fecha_registro_cita?: string
+    fecha_reagenda_cita?: string
+}
+
+
+export interface IClinicalHistory {
+    id_historial_clinico?: number
+    fk_usuario?:number
+    peso?: number
+    estatura?: number,
+    estatus_historial_clinico?: string
+    indice_masa_corporal?: number
+    grasa_corporal?: number
+    porcentaje_grasa_corporal?: number
+    masa_musculo_esqueletico?: number
+    cintura?: number
+    cadera?: number
+    antecedentes_medico?: string
+    antecedentes_familiares?: string
+    medicamentos_suplementos?: string
+    estilo_vida?: string
+    fecha_registro_historial_clinico?: string
 }

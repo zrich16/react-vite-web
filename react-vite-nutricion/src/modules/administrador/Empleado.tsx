@@ -1,10 +1,10 @@
-import DashboardLayout from "../../components/layout/DashboardLayout";
+import DashboardLayout from "../../shared/components/layout/DashboardLayout";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import type { IUsuario } from "../../types/IUsuario";
 import Swal from "sweetalert2";
 import { FaUser, FaIdBadge, FaPhoneVolume } from "react-icons/fa";
-import type { fusuario } from "../../types/filtros";
+import type { fusuario } from "../../types/IFiltros";
 import { useNavigate } from 'react-router-dom';
 
 export default function AdminEmpleado() {

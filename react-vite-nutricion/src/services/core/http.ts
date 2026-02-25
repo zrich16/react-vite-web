@@ -23,8 +23,10 @@ export const http = async <T>(
     headers,
   })
 
-  let json: any
+  let json: any;
   try {
+    let url = API_BASE_URL+endpoint;
+    console.log(url);
     json = await response.json()
   } catch {
     json = null

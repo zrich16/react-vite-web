@@ -1,14 +1,15 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Login from '../modules/login/Login';
+import Login from '../modules/login/page/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 
 import Paciente from '../modules/paciente/Paciente';
 import RegistroPaciente from '../modules/paciente/RegistroPaciente';
 import DetallePaciente from '../modules/paciente/DetallePaciente';
 
-import NutriologoInicio from '../modules/nutriologo/Nutriologo';
-import ListaPacientesNutriologo from '../modules/nutriologo/lista-pacientes';
+import NutriologoInicio from '../modules/nutriologo/page/Nutriologo';
+import ListaPacientesNutriologo from '../modules/nutriologo/page/lista-pacientes';
+import NutrioloPacienteDetalle from '../modules/nutriologo/page/nutriologo-detalle-paciente';
 
 
 import Recepcionista from '../modules/recepcionista/Recepcionista';
@@ -34,6 +35,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/nutriologo-inicio" element={<NutriologoInicio />} />
       <Route path="/nutriologo-registro-paciente" element={<RegistroPaciente />} />
         <Route path="/nutriologo-lista-paciente" element={<ListaPacientesNutriologo />} />
+           <Route path="/nutriologo-detalle-paciente" element={<NutrioloPacienteDetalle />} />
 
       {/* Rutas Modulo Recepcionista */}
       <Route path="/recepcionista-inicio" element={<Recepcionista />} />

@@ -1,5 +1,5 @@
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import ScreenBlock from '../../components/ui/ScreenBlock'
+import DashboardLayout from "../../shared/components/layout/DashboardLayout";
+import ScreenBlock from '../../shared/components/ui/ScreenBlock'
 import {
   FaUser,
   FaEnvelope,
@@ -16,7 +16,6 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import { NutriologoService } from '../../services/nutrilogo/nutriologo.service'
 import { validacionPaciente } from '../../funciones/validaciones'
 import type { UsuarioApi } from '../../types/IUsuario'
 
@@ -88,7 +87,7 @@ export default function Nutriologo() {
 
       if (msg == "") {
 
-        const respuesta = await NutriologoService.savePatient(data);
+       /*  const respuesta = await NutriologoService.savePatient(data); */
 
         navigate('/nutriologo-inicio');
         Swal.fire({
@@ -135,12 +134,7 @@ export default function Nutriologo() {
     <>
       <ScreenBlock show={loading} text="Enviando información..." />
       <DashboardLayout>
-        <button
-          onClick={() => document.documentElement.classList.toggle("dark")}
-          className="absolute top-4 right-4 text-sm text-slate-500 dark:text-slate-300"
-        >
-          🌙 Modo oscuro
-        </button>
+      
         <div className="min-h-screen flex items-center justify-center
   bg-gradient-to-br from-slate-50 to-blue-100
   dark:from-slate-900 dark:to-slate-800
@@ -187,8 +181,8 @@ export default function Nutriologo() {
                   className={`
         flex-1 py-3 text-sm font-semibold transition-all
         ${activeTab === tab
-                      ? "text-[#00008B] border-b-2 border-[#00008B]"
-                      : "text-slate-400 dark:text-slate-500 hover:text-slate-600"
+                      ? "text-[white] border-b-2 border-[#00008B] bg-blue-50 dark:bg-slate-800"
+                      : "text-slate-400 hover:text-slate-600"
                     }
       `}
                 >
@@ -208,11 +202,12 @@ export default function Nutriologo() {
   >
     {/* ───── IDENTIDAD DEL PACIENTE ───── */}
 <h3 className="
-  md:col-span-3
-  text-sm font-semibold tracking-wide
-  text-slate-200
-  border-b border-slate-700
+ md:col-span-3
+  text-sm font-semibold
+  text-slate-800 dark:text-slate-200
+  border-b border-slate-300 dark:border-slate-700
   pb-2
+  mt-6
 ">
       Información del Paciente
     </h3>
@@ -364,7 +359,11 @@ export default function Nutriologo() {
                 <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
   {/* ───── TÍTULO ───── */}
-  <h3 className="md:col-span-3 text-sm font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-2">
+  <h3 className="  md:col-span-3
+  text-xs font-semibold uppercase tracking-widest
+  text-[#00008B] dark:text-blue-400
+  border-b border-slate-200 dark:border-slate-700
+  pb-2">
     Evaluación Antropométrica y Clínica
   </h3>
 
@@ -551,7 +550,14 @@ export default function Nutriologo() {
                     setActiveTab(tabs[currentIndex + 1]);
                   }
                 }}
-                className="w-full py-3 rounded-xl text-white font-semibold bg-[#00008B] hover:bg-blue-600"
+                className=" w-full py-3 rounded-xl
+  bg-[#00008B]
+  text-white font-semibold tracking-wide
+  shadow-lg shadow-blue-900/20
+  hover:bg-blue-600
+  hover:shadow-blue-900/30
+  active:scale-95
+  transition-all duration-200"
               >
                 Siguiente
               </motion.button>
@@ -559,11 +565,12 @@ export default function Nutriologo() {
               <motion.button
                 type="submit"
                 className="
-  w-full py-3 rounded-xl
-  text-white font-semibold
-  bg-[#00008B] hover:bg-blue-600
-  dark:hover:bg-blue-500
-  transition-all
+  w-full py-2.5 rounded-md
+  bg-[#00008B]
+  text-white text-sm font-semibold
+  hover:bg-blue-700
+  focus:ring-2 focus:ring-[#00008B]/40
+  transition-colors
 "
                 whileTap={{ scale: 0.97 }}
                 whileHover={{ scale: 1.03 }}
@@ -582,7 +589,6 @@ export default function Nutriologo() {
 // Componente Input reutilizable para los inputs simples
 function Input({
   label,
-  icon,
   register,
   name,
   type = "text",
@@ -597,7 +603,10 @@ function Input({
 }) {
   return (
     <div className="relative">
-      <label htmlFor={name} className="text-sm font-medium text-slate-300 mb-1">
+      <label htmlFor={name} className=" block mb-1
+  text-xs font-semibold
+  text-slate-700 dark:text-slate-300
+  uppercase tracking-wider">
         {label}
       </label>
       <div className="relative text-slate-400 focus-within:text-[#00008B]">
@@ -607,15 +616,15 @@ function Input({
           type={type}
           {...register}
        className="
-  w-full px-4 py-3 rounded-lg
-  bg-slate-900
-  border border-slate-600
-  text-slate-100 placeholder-slate-500
+  w-full px-4 py-2.5 rounded-xl
+  border border-slate-300 dark:border-slate-600
+  bg-white dark:bg-slate-800
+  text-slate-700 dark:text-slate-200
+  placeholder-slate-400
   focus:outline-none
-  focus:ring-2 focus:ring-[#00008B]
+  focus:ring-2 focus:ring-[#00008B]/70
   focus:border-[#00008B]
-  hover:border-slate-400
-  transition
+  transition-all duration-200
 "
           autoComplete="off"
         />

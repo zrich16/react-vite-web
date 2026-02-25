@@ -4,6 +4,11 @@
 @import "./styles/login.css";
 @import "./styles/DetallePaciente.css";
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
 @media print {
   body {
     background: white;
@@ -31,3 +36,5 @@
     font-size: 12px;
   }
 }
+
+
